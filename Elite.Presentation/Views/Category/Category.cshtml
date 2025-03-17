@@ -1,5 +1,7 @@
 ﻿@model List<Category>
-
+@{
+    ViewData["Title"] = "Categories";
+}
 <div class="container" style="max-width: 850px;">
     <div class="row pt-4 pb-3">
         <div class="col-4">
@@ -16,7 +18,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">DisplayOrder</th>
+            <th scope="col">Display Order</th>
         </tr>
     </thead>
     <tbody>

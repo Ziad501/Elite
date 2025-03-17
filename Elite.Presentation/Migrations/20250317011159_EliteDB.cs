@@ -7,7 +7,7 @@
 namespace Elite.Presentation.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class EliteDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,8 @@ namespace Elite.Presentation.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DisplayOrder = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,9 +31,9 @@ namespace Elite.Presentation.Migrations
                 columns: new[] { "ID", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, "1", "Classic" },
-                    { 2, "2", "Sports" },
-                    { 3, "3", "Smart" }
+                    { 1, 1, "Phone Cases & Covers" },
+                    { 2, 2, "Screen Protectors" },
+                    { 3, 3, "Chargers & Cables" }
                 });
         }
 

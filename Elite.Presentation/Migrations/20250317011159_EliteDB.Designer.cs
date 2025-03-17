@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elite.Presentation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316043836_initDb")]
-    partial class initDb
+    [Migration("20250317011159_EliteDB")]
+    partial class EliteDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,9 +32,8 @@ namespace Elite.Presentation.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("DisplayOrder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,20 +47,20 @@ namespace Elite.Presentation.Migrations
                         new
                         {
                             ID = 1,
-                            DisplayOrder = "1",
-                            Name = "Classic"
+                            DisplayOrder = 1,
+                            Name = "Phone Cases & Covers"
                         },
                         new
                         {
                             ID = 2,
-                            DisplayOrder = "2",
-                            Name = "Sports"
+                            DisplayOrder = 2,
+                            Name = "Screen Protectors"
                         },
                         new
                         {
                             ID = 3,
-                            DisplayOrder = "3",
-                            Name = "Smart"
+                            DisplayOrder = 3,
+                            Name = "Chargers & Cables"
                         });
                 });
 #pragma warning restore 612, 618
