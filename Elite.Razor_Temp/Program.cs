@@ -1,3 +1,6 @@
+using Elite.Razor_Temp.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Elite.Razor_Temp
 {
     public class Program
@@ -5,7 +8,7 @@ namespace Elite.Razor_Temp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Add services to the container.
             builder.Services.AddRazorPages();
 
