@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Elite.Presentation.Models
+namespace Elite.Models
 {
     public class Category
     {

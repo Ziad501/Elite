@@ -1,9 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Elite.Presentation.Models;
+using Elite.Models;
 
-namespace Elite.Presentation.Controllers;
 
+namespace Elite.Presentation.Areas.Customer.Controllers;
+[Area("Customer")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

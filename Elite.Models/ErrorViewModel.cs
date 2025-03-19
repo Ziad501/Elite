@@ -1,4 +1,4 @@
-namespace Elite.Presentation.Models
+namespace Elite.Models
 {
     public class ErrorViewModel
     {

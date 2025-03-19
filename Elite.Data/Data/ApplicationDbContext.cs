@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Elite.Presentation.Models;
+using Elite.Models;
 
-namespace Elite.Presentation.Data
+namespace Elite.Data.Data
 {
     public class ApplicationDbContext : DbContext
     {

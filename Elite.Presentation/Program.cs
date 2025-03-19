@@ -1,4 +1,6 @@
-using Elite.Presentation.Data;
+using Elite.Data.Data;
+using Elite.Data.Repository;
+using Elite.Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elite.Presentation
@@ -13,6 +15,7 @@ namespace Elite.Presentation
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IUnitOfWork,UnitOfwork>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,7 +35,7 @@ namespace Elite.Presentation
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

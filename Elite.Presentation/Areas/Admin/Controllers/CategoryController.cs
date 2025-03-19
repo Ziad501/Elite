@@ -1,20 +1,24 @@
-﻿using Elite.Presentation.Data;
-using Elite.Presentation.Models;
+﻿using Elite.Data.Repository.IRepository;
+using Elite.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Elite.Presentation.Controllers
+namespace Elite.Presentation.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Category()
         {
-            List<Category> categories = _context.Categories.ToList();
+            List<Category> categories = _unitOfWork.category.GetAll().ToList();
             return View(categories);
         }
 
@@ -27,28 +31,29 @@ namespace Elite.Presentation.Controllers
             {
                 return View("CreateCategory", cat);
             }
+
             if (cat.Name == cat.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "Category Name and Display Order cannot be the same.");
                 return View("CreateCategory", cat);
             }
-            if (_context.Categories.Any(c => c.Name == cat.Name))
+
+            if (_unitOfWork.category.Any(c => c.Name == cat.Name))
             {
-                ModelState.AddModelError("Name", "Category Name already exists");
+                ModelState.AddModelError("Name", "Category Name already exists.");
                 return View("CreateCategory", cat);
             }
-            if (_context.Categories.Any(p => p.DisplayOrder == cat.DisplayOrder))
+
+            if (_unitOfWork.category.Any(p => p.DisplayOrder == cat.DisplayOrder))
             {
                 ModelState.AddModelError("DisplayOrder", "Display Order is required and must be unique.");
                 return View("CreateCategory", cat);
             }
-            else
-            {
-                _context.Categories.Add(cat);
-                _context.SaveChanges();
-                TempData["Message"] = "Category Created Successfully";
-                return RedirectToAction("Category");
-            }
+
+            _unitOfWork.category.Add(cat);
+            _unitOfWork.Save();
+            TempData["Message"] = "Category Created Successfully";
+            return RedirectToAction("Category");
         }
 
         public IActionResult Edit(int? id)
@@ -57,50 +62,63 @@ namespace Elite.Presentation.Controllers
             {
                 return NotFound();
             }
-            Category? category = _context.Categories.FirstOrDefault(p => p.ID == id);
+
+            Category? category = _unitOfWork.category.Get(p => p.ID == id);
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
         [HttpPost]
         public IActionResult SaveEdit(Category cat)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Categories.Update(cat);
-                _context.SaveChanges();
-                TempData["Message"] = "Category Updated Successfully";
-                return RedirectToAction("Category");
+                return View("Edit", cat);
             }
-            return View("Edit", cat);
+
+            if (_unitOfWork.category.Any(c => c.Name == cat.Name && c.ID != cat.ID))
+            {
+                ModelState.AddModelError("Name", "Category Name already exists.");
+                return View("Edit", cat);
+            }
+
+            _unitOfWork.category.Update(cat);
+            _unitOfWork.Save();
+            TempData["Message"] = "Category Updated Successfully";
+            return RedirectToAction("Category");
         }
+
         public IActionResult Delete(int? id)
         {
             if (id == null || id <= 0)
             {
                 return NotFound();
             }
-            Category? category = _context.Categories.FirstOrDefault(p => p.ID == id);
+
+            Category? category = _unitOfWork.category.Get(p => p.ID == id);
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletPost(int? id)
         {
-            Category cat = _context.Categories.FirstOrDefault(p => p.ID == id);
+            Category? cat = _unitOfWork.category.Get(p => p.ID == id);
             if (cat == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(cat);
-            _context.SaveChanges();
+
+            _unitOfWork.category.Remove(cat);
+            _unitOfWork.Save();
             TempData["Message"] = "Category Deleted Successfully";
             return RedirectToAction("Category");
         }
