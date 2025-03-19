@@ -9,6 +9,7 @@ namespace Elite.Data.Repository.IRepository
     public interface IUnitOfWork
     {
         public ICategoryRepository category { get; }
+        public IProductRepository product { get; }
         void Save();
     }
 }
