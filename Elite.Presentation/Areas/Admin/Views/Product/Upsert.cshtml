@@ -6,12 +6,13 @@
     <div class="card-header bg-primary bg-gradient ml-0 py-3 shadow">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Add a Product</h2>
+                <h2 class="text-white py-2">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
-        <form asp-action="SaveProduct" method="post" class="row">
+        <form asp-action="SaveProduct" method="post" class="row" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Product.Id" />
             <div class="border p-4">
                 @* <div class="row pb-2 text-center"> *@
                 @*     <h2 class="text-primary p-0">Add a Product</h2> *@
@@ -22,7 +23,7 @@
                     <span asp-validation-for="Product.ProductName" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Product.Description" class="form-control border-2 shadow" />
+                    <textarea asp-for="Product.Description" class="form-control border-2 shadow"></textarea>
                     <label asp-for="Product.Description" class="ms-2 text-primary"></label>
                     <span asp-validation-for="Product.Description" class="text-danger"></span>
                 </div>
@@ -56,9 +57,8 @@
                     <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Product.ImageUrl" class="form-control border-2 shadow" />
-                    <label asp-for="Product.ImageUrl" class="ms-2 text-primary"></label>
-                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+                    <input type="file" class="form-control border-2 shadow" />
+                    <label asp-for="Product.ImageUrl" class="ms-2 text-primary">Image</label>
                 </div>
                 @* <div asp-validation-summary="All"></div> *@
                 <div class="row d-flex justify-content-center pt-2">

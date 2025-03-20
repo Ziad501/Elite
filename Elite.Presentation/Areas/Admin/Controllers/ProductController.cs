@@ -25,7 +25,7 @@ namespace Elite.Presentation.Areas.Admin.Controllers
             return View(products);
         }
 
-        public IActionResult CreateProduct()
+        public IActionResult Upsert(int? id)
         {
             //ViewBag.categoryList = categoryList;
             ProductVM productVM = new()
@@ -37,11 +37,19 @@ namespace Elite.Presentation.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if (id is null || id <= 0)
+            {
+                return View(productVM); //create a new product
+            }
+            else
+            {
+                productVM.Product = _unitOfWork.product.Get(p => p.Id == id);
+                return View(productVM); //update
+            }
         }
 
         [HttpPost]
-        public IActionResult SaveProduct(ProductVM cat)
+        public IActionResult Upsert(ProductVM cat, IFormFile? formFile)
         {
             if (ModelState.IsValid)
             {
@@ -53,34 +61,34 @@ namespace Elite.Presentation.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id <= 0)
-            {
-                return NotFound();
-            }
+        //public IActionResult Edit(int? id)
+        //{
+        //    if (id == null || id <= 0)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Product? Product = _unitOfWork.product.Get(p => p.Id == id);
-            if (Product == null)
-            {
-                return NotFound();
-            }
+        //    Product? Product = _unitOfWork.product.Get(p => p.Id == id);
+        //    if (Product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(Product);
-        }
+        //    return View(Product);
+        //}
 
-        [HttpPost]
-        public IActionResult SaveEdit(Product cat)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.product.Update(cat);
-                _unitOfWork.Save();
-                TempData["Message"] = "Product Updated Successfully";
-                return RedirectToAction("Product");
-            }
-            return View(cat);
-        }
+        //[HttpPost]
+        //public IActionResult SaveEdit(Product cat)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.product.Update(cat);
+        //        _unitOfWork.Save();
+        //        TempData["Message"] = "Product Updated Successfully";
+        //        return RedirectToAction("Product");
+        //    }
+        //    return View(cat);
+        //}
 
         public IActionResult Delete(int? id)
         {
