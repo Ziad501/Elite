@@ -34,6 +34,11 @@ namespace Elite.Data.Repository
         {
             return _context.Set<T>().Any(filter);
         }
+        public IEnumerable<T> GetAll(string includeProperties)
+        {
+            IQueryable<T> query = dbset;
+            return query.ToList();
+        }
         public IEnumerable<T> GetAll()
         {
             IQueryable<T> query = dbset;

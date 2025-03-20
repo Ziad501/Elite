@@ -9,6 +9,7 @@ namespace Elite.Data.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
+        IEnumerable<T> GetAll(string includeProperties);
         IEnumerable<T> GetAll();
         T? Get(Expression<Func<T, bool>> filter);
         bool Any(Expression<Func<T, bool>> filter);

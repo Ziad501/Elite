@@ -19,7 +19,21 @@ namespace Elite.Data.Repository
 
         public void Update(Product pro)
         {
-            _context.Products.Update(pro);
+            var product = _context.Products.FirstOrDefault(p => p.Id == pro.Id);
+            if (product != null)
+            {
+                if (pro.ImageUrl != null)
+                {
+                    product.ImageUrl = pro.ImageUrl;
+                }
+                product.ProductName = pro.ProductName;
+                product.Description = pro.Description;
+                product.Brand = pro.Brand;
+                product.Price = pro.Price;
+                product.Price50 = pro.Price50;
+                product.Price100 = pro.Price100;
+                product.CategoryId = pro.CategoryId;
+            }
         }
     }
 }

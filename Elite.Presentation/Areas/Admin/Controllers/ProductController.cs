@@ -21,7 +21,7 @@ namespace Elite.Presentation.Areas.Admin.Controllers
 
         public IActionResult Product()
         {
-            List<Product> products = _unitOfWork.product.GetAll().ToList();
+            List<Product> products = _unitOfWork.product.GetAll(includeProperties: "category").ToList();
            
             return View(products);
         }
@@ -31,7 +31,7 @@ namespace Elite.Presentation.Areas.Admin.Controllers
             //ViewBag.categoryList = categoryList;
             ProductVM productVM = new()
             {
-                categoryList = _unitOfWork.category.GetAll().Select(p => new SelectListItem
+                categoryList = _unitOfWork.category.GetAll(includeProperties: "category").Select(p => new SelectListItem
                 {
                     Text = p.Name,
                     Value = p.ID.ToString()
@@ -58,16 +58,31 @@ namespace Elite.Presentation.Areas.Admin.Controllers
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath,"Images","Products");
+                    string productPath = Path.Combine(wwwRootPath, "Images", "Products");
 
-                    using (var fileStream = new FileStream(Path.Combine(productPath,fileName), FileMode.Create))
+                    if (!string.IsNullOrEmpty(cat.Product.ImageUrl))
+                    {
+                        string imagePath = Path.Combine(wwwRootPath, cat.Product.ImageUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
                     cat.Product.ImageUrl = "/Images/Products/" + fileName;
                 }
             }
-            _unitOfWork.product.Add(cat.Product);
+            if(cat.Product.Id == 0)
+            {
+                _unitOfWork.product.Add(cat.Product);
+            }
+            else
+            {
+                _unitOfWork.product.Update(cat.Product);
+            }
             _unitOfWork.Save();
             TempData["Message"] = "Product Created Successfully";
             return RedirectToAction("Product");
@@ -131,6 +146,13 @@ namespace Elite.Presentation.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["Message"] = "Product Deleted Successfully";
             return RedirectToAction("Product");
+        }
+        //api/Product/GetAll
+        [HttpGet]
+        public IActionResult GetAll() 
+        {
+            List<Product> products = _unitOfWork.product.GetAll(includeProperties: "category").ToList();
+            return Json(new { data = products });
         }
     }
 }
