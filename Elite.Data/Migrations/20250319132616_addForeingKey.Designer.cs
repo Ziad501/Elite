@@ -3,6 +3,7 @@ using Elite.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319132616_addForeingKey")]
+    partial class addForeingKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,10 +108,6 @@ namespace Elite.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -136,7 +135,6 @@ namespace Elite.Data.Migrations
                             Brand = "GRABIST",
                             CategoryId = 1,
                             Description = "A magnatic case for samsung galaxy s24 ultra, full camera protection with lens, black",
-                            ImageUrl = "",
                             Price = 200.0,
                             Price100 = 150.0,
                             Price50 = 170.0,
@@ -148,7 +146,6 @@ namespace Elite.Data.Migrations
                             Brand = "Gtech",
                             CategoryId = 1,
                             Description = "A magnatic transparent case for iphone 15 pro max case, combatible with magnatic charger",
-                            ImageUrl = "",
                             Price = 155.0,
                             Price100 = 130.0,
                             Price50 = 140.0,
@@ -160,7 +157,6 @@ namespace Elite.Data.Migrations
                             Brand = "Dalaa mobilak",
                             CategoryId = 1,
                             Description = "A flexible silicon case for Oppo Find X 5 Case, grey",
-                            ImageUrl = "",
                             Price = 175.0,
                             Price100 = 140.0,
                             Price50 = 150.0,
@@ -172,7 +168,6 @@ namespace Elite.Data.Migrations
                             Brand = "JOYROOM",
                             CategoryId = 2,
                             Description = "high quality screen protector, transparent",
-                            ImageUrl = "",
                             Price = 500.0,
                             Price100 = 430.0,
                             Price50 = 450.0,
@@ -184,7 +179,6 @@ namespace Elite.Data.Migrations
                             Brand = "Anker",
                             CategoryId = 1,
                             Description = "high quality screen protector, transparent",
-                            ImageUrl = "",
                             Price = 500.0,
                             Price100 = 430.0,
                             Price50 = 450.0,
@@ -196,7 +190,6 @@ namespace Elite.Data.Migrations
                             Brand = "Generic",
                             CategoryId = 1,
                             Description = "high quality screen protector, transparent",
-                            ImageUrl = "",
                             Price = 400.0,
                             Price100 = 350.0,
                             Price50 = 370.0,
@@ -208,7 +201,6 @@ namespace Elite.Data.Migrations
                             Brand = "Anker",
                             CategoryId = 1,
                             Description = "20W USB-C Power Supply Charging",
-                            ImageUrl = "",
                             Price = 600.0,
                             Price100 = 550.0,
                             Price50 = 570.0,
@@ -220,7 +212,6 @@ namespace Elite.Data.Migrations
                             Brand = "Xiaomi",
                             CategoryId = 1,
                             Description = "33W USB-C Power Supply Charging",
-                            ImageUrl = "",
                             Price = 200.0,
                             Price100 = 150.0,
                             Price50 = 170.0,
@@ -232,7 +223,6 @@ namespace Elite.Data.Migrations
                             Brand = "JOYROOM",
                             CategoryId = 1,
                             Description = "a Joyroom 3 in 1 wireless charger for apple products",
-                            ImageUrl = "",
                             Price = 1200.0,
                             Price100 = 1150.0,
                             Price50 = 1170.0,
@@ -244,7 +234,6 @@ namespace Elite.Data.Migrations
                             Brand = "Apple",
                             CategoryId = 1,
                             Description = "A wirless charger from apple.",
-                            ImageUrl = "",
                             Price = 2200.0,
                             Price100 = 2150.0,
                             Price50 = 2170.0,
@@ -256,7 +245,6 @@ namespace Elite.Data.Migrations
                             Brand = "JBL",
                             CategoryId = 1,
                             Description = "black wired hand-free from jbl",
-                            ImageUrl = "",
                             Price = 250.0,
                             Price100 = 190.0,
                             Price50 = 210.0,
@@ -268,7 +256,6 @@ namespace Elite.Data.Migrations
                             Brand = "GRABIST",
                             CategoryId = 1,
                             Description = "bluetooth 5.3, powerful bass, itelligent touch control",
-                            ImageUrl = "",
                             Price = 3200.0,
                             Price100 = 3150.0,
                             Price50 = 3170.0,
@@ -280,7 +267,6 @@ namespace Elite.Data.Migrations
                             Brand = "Apple",
                             CategoryId = 1,
                             Description = "Premium apple Airpods with noise cancelation",
-                            ImageUrl = "",
                             Price = 9800.0,
                             Price100 = 9150.0,
                             Price50 = 9570.0,
@@ -292,7 +278,6 @@ namespace Elite.Data.Migrations
                             Brand = "Anker",
                             CategoryId = 1,
                             Description = "Bluetooth speaker with ipx7 waterproof protection, 20W ,12h playtime, black",
-                            ImageUrl = "",
                             Price = 2000.0,
                             Price100 = 1500.0,
                             Price50 = 1750.0,
@@ -304,7 +289,6 @@ namespace Elite.Data.Migrations
                             Brand = "JBL",
                             CategoryId = 1,
                             Description = "ip67 waterproof speaker w bold JBL original pro sound, 12h battery, 1 year warranty",
-                            ImageUrl = "",
                             Price = 5600.0,
                             Price100 = 5100.0,
                             Price50 = 5200.0,
@@ -316,7 +300,6 @@ namespace Elite.Data.Migrations
                             Brand = "JBL",
                             CategoryId = 1,
                             Description = "ip67 waterproof 7h playtime, playtimeboost and JBL Pro Sound",
-                            ImageUrl = "",
                             Price = 3200.0,
                             Price100 = 3150.0,
                             Price50 = 3170.0,
@@ -328,7 +311,6 @@ namespace Elite.Data.Migrations
                             Brand = "GRABIST",
                             CategoryId = 1,
                             Description = "tempered glass and ultra-thin aluminum",
-                            ImageUrl = "",
                             Price = 90.0,
                             Price100 = 50.0,
                             Price50 = 70.0,
@@ -340,7 +322,6 @@ namespace Elite.Data.Migrations
                             Brand = "GRABIST",
                             CategoryId = 1,
                             Description = "tempered glass and ultra-thin aluminum",
-                            ImageUrl = "",
                             Price = 200.0,
                             Price100 = 150.0,
                             Price50 = 170.0,
@@ -352,7 +333,6 @@ namespace Elite.Data.Migrations
                             Brand = "Reioo",
                             CategoryId = 1,
                             Description = "Reioo 9H tempered glass and ultra-thin aluminum",
-                            ImageUrl = "",
                             Price = 70.0,
                             Price100 = 45.0,
                             Price50 = 50.0,
@@ -364,7 +344,6 @@ namespace Elite.Data.Migrations
                             Brand = "Anker",
                             CategoryId = 1,
                             Description = "10.000mAh portable charger and PD 30W",
-                            ImageUrl = "",
                             Price = 300.0,
                             Price100 = 250.0,
                             Price50 = 270.0,
@@ -376,7 +355,6 @@ namespace Elite.Data.Migrations
                             Brand = "Xiaomi",
                             CategoryId = 1,
                             Description = "10.000mAh portable charger and 6-moth warranty",
-                            ImageUrl = "",
                             Price = 200.0,
                             Price100 = 150.0,
                             Price50 = 170.0,

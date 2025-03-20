@@ -1,6 +1,8 @@
 ﻿using Elite.Data.Repository.IRepository;
 using Elite.Models;
+using Elite.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,17 +21,31 @@ namespace Elite.Presentation.Areas.Admin.Controllers
         public IActionResult Product()
         {
             List<Product> products = _unitOfWork.product.GetAll().ToList();
+           
             return View(products);
         }
 
-        public IActionResult CreateProduct() => View();
+        public IActionResult CreateProduct()
+        {
+            //ViewBag.categoryList = categoryList;
+            ProductVM productVM = new()
+            {
+                categoryList = _unitOfWork.category.GetAll().Select(p => new SelectListItem
+                {
+                    Text = p.Name,
+                    Value = p.ID.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
+        }
 
         [HttpPost]
-        public IActionResult SaveProduct(Product cat)
+        public IActionResult SaveProduct(ProductVM cat)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.product.Add(cat);
+                _unitOfWork.product.Add(cat.Product);
                 _unitOfWork.Save();
                 TempData["Message"] = "Product Created Successfully";
                 return RedirectToAction("Product");
