@@ -28,7 +28,7 @@ namespace Elite.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
-        public Category Category { get; set; }
-        public string ImageUrl { get; set; }
+        public Category? Category { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

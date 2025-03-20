@@ -12,10 +12,11 @@ namespace Elite.Presentation.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Product()
@@ -49,16 +50,27 @@ namespace Elite.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM cat, IFormFile? formFile)
+        public IActionResult Upsert(ProductVM cat, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.product.Add(cat.Product);
-                _unitOfWork.Save();
-                TempData["Message"] = "Product Created Successfully";
-                return RedirectToAction("Product");
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath,"Images","Products");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath,fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    cat.Product.ImageUrl = "/Images/Products/" + fileName;
+                }
             }
-            return View();
+            _unitOfWork.product.Add(cat.Product);
+            _unitOfWork.Save();
+            TempData["Message"] = "Product Created Successfully";
+            return RedirectToAction("Product");
         }
 
         //public IActionResult Edit(int? id)
