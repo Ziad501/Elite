@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Elite.Data.Repository.IRepository;
 using Elite.Models;
 using Elite.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -27,13 +28,14 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IUnitOfWork _unitOfWork;
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
+            IUnitOfWork unitOfWork,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -43,6 +45,7 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -108,6 +111,10 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
             public string? Province { get; set; }
             public string? PostalCode { get; set; }
             public string? PhoneNumber { get; set; }
+            public int? companyId { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
+
         }
         //public class ApplicationUser : IdentityUser
         //{
@@ -130,10 +137,15 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
             }
             Input = new()
             {
-                RoleList = _roleManager.Roles.Select(p =>p.Name).Select(x=> new SelectListItem
+                RoleList = _roleManager.Roles.Select(p => p.Name).Select(x => new SelectListItem
                 {
                     Text = x,
-                    Value =x
+                    Value = x
+                }),
+                CompanyList = _unitOfWork.company.GetAll().Select(z => new SelectListItem
+                {
+                    Text = z.Name,
+                    Value = z.Id.ToString()
                 })
             };
 
