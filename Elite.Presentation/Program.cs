@@ -1,7 +1,9 @@
 using Elite.Data.Data;
 using Elite.Data.Repository;
 using Elite.Data.Repository.IRepository;
+using Elite.Utility;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elite.Presentation
@@ -17,9 +19,10 @@ namespace Elite.Presentation
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork,UnitOfwork>();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
