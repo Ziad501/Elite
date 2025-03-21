@@ -7,6 +7,8 @@ namespace Elite.Models
 {
     public class ApplicationUser:IdentityUser
     {
+        public int? companyId;
+
         [Required]
         public string Name { get; set; }
         public string? StreetAdress { get; set; }

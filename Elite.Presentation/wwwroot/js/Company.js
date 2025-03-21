@@ -9,17 +9,17 @@ function loaddatatable() {
         },
         "columns": [
             
-            { data: 'name', "width": "10%" },
-            { data: 'city', "width": "10%" },
-            { data: 'province', "width": "10%" },
-            { data: 'phoneNumber', "width": "10%" },
+            { data: 'name', "width": "20%" },
+            { data: 'city', "width": "15%" },
+            { data: 'province', "width": "15%" },
+            { data: 'phoneNumber', "width": "15%" },
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-100 btn-group" role="group">
                     <a href="/admin/Company/Upsert?id=${data}" class="btn btn-primary text-white mx-2" style="cursor:pointer;"><i class="bi bi-pencil"></i> Edit</a>
                     <a onClick=Delete('/admin/Company/delete?id=${data}') class="btn btn-danger text-white mx-2" style="cursor:pointer;"><i class="bi bi-trash"></i> Delete</a>
                     </div>`
-            } , "width": "40%" }
+            } , "width": "20%" }
         ]
     });
 }

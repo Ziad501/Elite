@@ -116,15 +116,6 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> CompanyList { get; set; }
 
         }
-        //public class ApplicationUser : IdentityUser
-        //{
-        //    public string? StreetAdress { get; set; }
-        //    public string? City { get; set; }
-        //    public string? Province { get; set; }
-        //    public string? PostalCode { get; set; }
-        //    public string? PhoneNumber { get; set; }
-        //}
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -178,7 +169,10 @@ namespace Elite.Presentation.Areas.Identity.Pages.Account
                 user.Province = Input.Province;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
-
+                if (Input.Role == SD.Role_Company) 
+                {
+                    user.companyId = Input.companyId;
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
