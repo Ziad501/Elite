@@ -1,6 +1,7 @@
 using Elite.Data.Data;
 using Elite.Data.Repository;
 using Elite.Data.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elite.Presentation
@@ -15,6 +16,9 @@ namespace Elite.Presentation
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            //builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddScoped<IUnitOfWork,UnitOfwork>();
             var app = builder.Build();
 
@@ -30,7 +34,7 @@ namespace Elite.Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

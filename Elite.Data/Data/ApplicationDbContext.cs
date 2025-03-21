@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Elite.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace Elite.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
