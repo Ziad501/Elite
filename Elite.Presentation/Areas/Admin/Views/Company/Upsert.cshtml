@@ -1,0 +1,67 @@
+﻿@model Company
+@{
+    ViewData["Title"] = Model.Id != 0 ? "Update Company" : "Create Company";
+}
+<div class="container mt-4 card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3 shadow">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@(Model.Id != 0 ? "Update" : "Create") Company</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-12">
+                    <div class="border p-4">
+                        @* <div class="row pb-2 text-center"> *@
+                        @*     <h2 class="text-primary p-0">Add a Product</h2> *@
+                        @* </div> *@
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Name" class="form-control border-2 shadow" />
+                            <label asp-for="Name" class="ms-2 text-primary"></label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <textarea asp-for="StreetAdress" class="form-control border-2 shadow"></textarea>
+                            <label asp-for="StreetAdress" class="ms-2 text-primary"></label>
+                            <span asp-validation-for="StreetAdress" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="City" class="form-control border-2 shadow" />
+                            <label asp-for="City" class="ms-2 text-primary"></label>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Province" class="form-control border-2 shadow" />
+                            <label asp-for="Province" class="ms-2 text-primary"></label>
+                            <span asp-validation-for="Province" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="PhoneNumber" class="form-control border-2 shadow" />
+                            <label asp-for="PhoneNumber" class="ms-2 text-primary"></label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        @* <div asp-validation-summary="All"></div> *@
+                        <div class="row d-flex justify-content-center pt-2">
+                            <div class="col-5">
+                                <button type="submit" class="btn btn-primary bg-gradient shadow form-control">Save</button>
+                            </div>
+                            <div class="col-5">
+                                <a asp-controller="Company" asp-action="Company" class="btn btn-outline-secondary shadow form-control">Back To List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@*this is used for client side validation*@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

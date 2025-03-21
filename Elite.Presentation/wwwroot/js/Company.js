@@ -5,22 +5,21 @@ $(document).ready(function () {
 function loaddatatable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            url: '/admin/product/getall'
+            url: '/admin/Company/GetAll'
         },
         "columns": [
             
-            { data: 'productName', "width": "20%" },
-            { data: 'description', "width": "25%" },
-            { data: 'brand', "width": "10%" },
-            { data: 'price', "width": "5%" },
+            { data: 'name', "width": "10%" },
+            { data: 'city', "width": "10%" },
+            { data: 'province', "width": "10%" },
+            { data: 'phoneNumber', "width": "10%" },
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-100 btn-group" role="group">
-                    <a href="/admin/product/Upsert?id=${data}" class="btn btn-primary text-white mx-2" style="cursor:pointer;"><i class="bi bi-pencil"></i> Edit</a>
-                    <a onClick=Delete('/admin/product/delete?id=${data}') class="btn btn-danger text-white mx-2" style="cursor:pointer;"><i class="bi bi-trash"></i> Delete</a>
+                    <a href="/admin/Company/Upsert?id=${data}" class="btn btn-primary text-white mx-2" style="cursor:pointer;"><i class="bi bi-pencil"></i> Edit</a>
+                    <a onClick=Delete('/admin/Company/delete?id=${data}') class="btn btn-danger text-white mx-2" style="cursor:pointer;"><i class="bi bi-trash"></i> Delete</a>
                     </div>`
-            } , "width": "25%" }
-            
+            } , "width": "40%" }
         ]
     });
 }

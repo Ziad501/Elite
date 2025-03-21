@@ -21,6 +21,10 @@ namespace Elite.Data.Data
                 new Category { ID = 5, Name = "Bluetooth Speakers", DisplayOrder = 5 },
                 new Category { ID = 6, Name = "Lens protection", DisplayOrder = 6 },
                 new Category { ID = 7, Name = "Power Banks", DisplayOrder = 7 }
+                ); 
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "Anker", StreetAdress = "66 saad zaghlol", City="alex", Province="alexandria", PhoneNumber="0322839",PostalCode="123123" },
+                new Company { Id = 2, Name = "Apple", StreetAdress = "67 safeya zaghlol", City="alex", Province="alexandria", PhoneNumber="0322838", PostalCode="234234" }
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, ProductName = "S24 Ultra Case", Description = "A magnatic case for samsung galaxy s24 ultra, full camera protection with lens, black", Brand = "GRABIST", Price = 200, Price50 = 170, Price100 = 150, CategoryId =1, ImageUrl = "" },
@@ -69,5 +73,6 @@ namespace Elite.Data.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }

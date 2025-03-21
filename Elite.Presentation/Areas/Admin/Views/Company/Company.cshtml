@@ -1,12 +1,11 @@
-﻿@model List<Product>
-@{
-    ViewData["Title"] = "Products";
+﻿@{
+    ViewData["Title"] = "Companies";
 }
 <div class="container my-4 card shadow border-0 my-4">
     <div class="card-header bg-primary bg-gradient ml-0 py-3 shadow">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Product List</h2>
+                <h2 class="text-white py-2">Company List</h2>
             </div>
         </div>
     </div>
@@ -14,27 +13,26 @@
         <div class="row pt-0 pb-4">
 
             <div class="col-12 text-end bg-gradient">
-                <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary w-auto">
-                    <i class="bi bi-plus-circle"></i>  Create a Product
+                <a asp-controller="Company" asp-action="Upsert" class="btn btn-primary w-auto">
+                    <i class="bi bi-plus-circle"></i>  Create a Company
                 </a>
             </div>
         </div>
         <table id="tblData" class="table table-hover border table-striped text-start" width="100%">
             <thead>
                 <tr>
-
-                    <th scope="col">ProductName</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Price</th>
-                    <th></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Province</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
 @section Scripts {
-    <script src="~/js/Product.js">
+    <script src="~/js/Company.js">
        
     </script>
 }

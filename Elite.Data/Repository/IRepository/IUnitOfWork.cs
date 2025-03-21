@@ -10,6 +10,7 @@ namespace Elite.Data.Repository.IRepository
     {
         public ICategoryRepository category { get; }
         public IProductRepository product { get; }
+        public ICompanyRepository company { get; }
         void Save();
     }
 }
