@@ -35,5 +35,6 @@ namespace Elite.Data.Repository
                 product.CategoryId = pro.CategoryId;
             }
         }
+
     }
 }

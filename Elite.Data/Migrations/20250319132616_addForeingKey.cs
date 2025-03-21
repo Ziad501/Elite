@@ -175,7 +175,7 @@ namespace Elite.Data.Migrations
                 column: "CategoryId",
                 principalTable: "Categories",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />

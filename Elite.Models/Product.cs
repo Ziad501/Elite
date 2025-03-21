@@ -11,11 +11,11 @@ namespace Elite.Models
         [Required(ErrorMessage = "Name shouldn't be Empty")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be between 3-20 character")]
         [Display(Name = "Category Name")]
-        public string ProductName { get; set; } = string.Empty;
+        public string ProductName { get; set; } 
         [Required]
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; }
         [Required]
-        public string Brand { get; set; } = string.Empty;
+        public string Brand { get; set; }
         [Required]
         [Display(Name = "Price for 1-50")]
         public double Price { get; set; } 
@@ -28,6 +28,7 @@ namespace Elite.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
+
         public Category? Category { get; set; }
         public string? ImageUrl { get; set; }
     }

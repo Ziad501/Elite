@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Elite.Models;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace Elite.Data.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -11,6 +12,7 @@ namespace Elite.Data.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(
                 new Category { ID = 1, Name = "Phone Cases & Covers", DisplayOrder = 1 },
                 new Category { ID = 2, Name = "Screen Protectors", DisplayOrder = 2 },
