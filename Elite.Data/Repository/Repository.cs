@@ -8,6 +8,7 @@ using Elite.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Elite.Models;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Elite.Data.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
@@ -24,27 +25,44 @@ namespace Elite.Data.Repository
             dbset.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbset;
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbset;
+            }
+            else
+            {
+                query = dbset.AsNoTracking();
+            }
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
             return query.FirstOrDefault();
         }
         public bool Any(Expression<Func<T, bool>> filter)
         {
             return _context.Set<T>().Any(filter);
         }
-        public IEnumerable<T> GetAll(string includeProperties)
+        public IEnumerable<T> GetAll(string? includeProperties)
         {
             IQueryable<T> query = dbset;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.ToList();
         }
-        public IEnumerable<T> GetAll()
-        {
-            IQueryable<T> query = dbset;
-            return query.ToList();
-        }
-
         public void Remove(T entity)
         {
             dbset.Remove(entity);

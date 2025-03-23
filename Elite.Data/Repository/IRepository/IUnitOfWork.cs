@@ -11,6 +11,8 @@ namespace Elite.Data.Repository.IRepository
         public ICategoryRepository category { get; }
         public IProductRepository product { get; }
         public ICompanyRepository company { get; }
+        public IShoppingCartRepository shoppingCart { get; }
+        public IApplicationUserRepository ApplicationUser { get; }
         void Save();
     }
 }

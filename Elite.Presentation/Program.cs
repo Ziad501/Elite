@@ -22,7 +22,7 @@ namespace Elite.Presentation
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/Identity/Account/Login";
-                options.LoginPath = $"/Identity/Account/Logout";
+                options.LoginPath = $"/Identity/Account/Login";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 

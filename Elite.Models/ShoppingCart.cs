@@ -11,8 +11,10 @@ namespace Elite.Models
 {
     public class ShoppingCart
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         [ForeignKey("ProductId")]
         [ValidateNever]
         public Product Product { get; set; }

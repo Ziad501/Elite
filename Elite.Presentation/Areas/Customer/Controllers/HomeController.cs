@@ -2,6 +2,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Elite.Models;
 using Elite.Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace Elite.Presentation.Areas.Customer.Controllers;
@@ -23,10 +25,41 @@ public class HomeController : Controller
     } 
     public IActionResult Details(int? id)
     {
-        Product product = _unitOfWork.product.Get(p=>p.Id == id);
+        ShoppingCart cart = new()
+        {
+            Product = _unitOfWork.product.Get(p => p.Id == id),
+            Count = 1,
+            ProductId = id
 
-        return View(product);
+        };
+        return View(cart);
     }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Details(ShoppingCart shoppingCart)
+    {
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        shoppingCart.ApplicationUserId = userId;
+        shoppingCart.Id = 0; 
+
+        ShoppingCart? cartFromDb =_unitOfWork.shoppingCart.Get(p=>p.ApplicationUserId == userId && p.ProductId == shoppingCart.ProductId);
+        if (cartFromDb != null)
+        {
+            cartFromDb.Count += shoppingCart.Count;
+            _unitOfWork.shoppingCart.Update(cartFromDb);
+        }
+        else
+        {
+            _unitOfWork.shoppingCart.Add(shoppingCart);
+        }
+        _unitOfWork.Save();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+
 
     public IActionResult Privacy()
     {
