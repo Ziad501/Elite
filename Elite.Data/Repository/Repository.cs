@@ -51,9 +51,13 @@ namespace Elite.Data.Repository
         {
             return _context.Set<T>().Any(filter);
         }
-        public IEnumerable<T> GetAll(string? includeProperties)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties)
         {
             IQueryable<T> query = dbset;
+            if(filter != null)
+            {
+            query = query.Where(filter);
+            }
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
