@@ -14,7 +14,7 @@ namespace Elite.Presentation.Areas.Customer.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         public ShoppingCartVM shoppingCartVM { get; set; }
-        public CartController (IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -33,6 +33,43 @@ namespace Elite.Presentation.Areas.Customer.Controllers
             }
             return View(shoppingCartVM);
         }
+        public IActionResult Summery()
+        {
+            return View();
+        }
+
+        public IActionResult Plus(int id)
+        {
+            var cartFromDb = _unitOfWork.shoppingCart.Get(p => p.Id == id);
+            cartFromDb.Count += 1;
+            _unitOfWork.shoppingCart.Update(cartFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Minus(int id)
+        {
+            var cartFromDb = _unitOfWork.shoppingCart.Get(p => p.Id == id);
+            if (cartFromDb.Count <= 1)
+            {
+                _unitOfWork.shoppingCart.Remove(cartFromDb);
+            }
+            else
+            {
+                cartFromDb.Count -= 1;
+                _unitOfWork.shoppingCart.Update(cartFromDb);
+            }
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Remove(int id)
+        {
+            var cartFromDb = _unitOfWork.shoppingCart.Get(p => p.Id == id);
+            _unitOfWork.shoppingCart.Remove(cartFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+
         private double GetPricePerQuantity(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Count <= 50)
@@ -41,7 +78,7 @@ namespace Elite.Presentation.Areas.Customer.Controllers
             }
             else
             {
-                if(shoppingCart.Count<=100)
+                if (shoppingCart.Count <= 100)
                 {
                     return shoppingCart.Product.Price50;
                 }
